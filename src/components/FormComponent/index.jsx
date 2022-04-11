@@ -44,7 +44,7 @@ export default function FormComponent() {
           required
         />
         <input
-          {...register("lastName", { required: true })}
+          {...register("lastName", { required: true, pattern: /^[A-Za-z]+$/i })}
           placeholder="Sobrenome"
         />
         {errors.lastName && <span>Campo sobrenome é obrigatório</span>}
