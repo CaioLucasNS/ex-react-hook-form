@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { TextField } from "@mui/material";
+
+import Select from "../Select";
 import ButtonResult from "../ButtonResult";
+
 import "./styles.css";
 
 const defaultValues = {
@@ -44,6 +47,12 @@ export default function FormMaterialUi() {
             name="TextField2"
             control={control}
             rules={{ required: true }}
+          />
+
+          <Controller
+            name="Genero"
+            control={control}
+            render={({ field }) => <Select {...field} />}
           />
         </section>
         <ButtonResult {...{ data, reset, defaultValues }} />
