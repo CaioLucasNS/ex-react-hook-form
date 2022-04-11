@@ -1,4 +1,4 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import { useForm } from "react-hook-form";
 import "./styles.css";
 
@@ -13,10 +13,36 @@ export default function FormComponent() {
   } = useForm();
   const onSubmit = (data) => alert(JSON.stringify(data));
 
+  const Input = ({ error, name, label, register, required }) => (
+    <>
+      {/* <label>{label}</label> */}
+      <input {...register(label, { required })} placeholder={name} />
+      {error && <span>Campo obrigatório!</span>}
+    </>
+  );
+
+  const Select = forwardRef(({ onChange, onBlur, name, label }, ref) => (
+    <>
+      {/* <label>{label}</label> */}
+      <select name={name} ref={ref} onChange={onChange} onBlur={onBlur}>
+        <option value=""></option>
+        <option value="male">Masculino</option>
+        <option value="female">Feminino</option>
+        <option value="other">Outro</option>
+      </select>
+    </>
+  ));
+
   return (
     <div className="container">
       <form className="form" onSubmit={handleSubmit(onSubmit)}>
-        <input {...register("name")} placeholder="Nome" />
+        <Input
+          name="Nome"
+          label="firstName"
+          register={register}
+          error={errors.firstName}
+          required
+        />
         <input
           {...register("lastName", { required: true })}
           placeholder="Sobrenome"
@@ -29,12 +55,7 @@ export default function FormComponent() {
         />
         {errors.age && <span>idade não permitida</span>}
 
-        <select {...register("gender")}>
-          <option value=""></option>
-          <option value="male">Masculino</option>
-          <option value="female">Feminino</option>
-          <option value="other">Outro</option>
-        </select>
+        <Select label="gender" {...register("gender")} />
 
         <p>
           Render: <span>{counter++}</span>
